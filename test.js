@@ -1,26 +1,57 @@
-// test
 function stringLength(string) {
+  if (string.length < 1) {
+    throw new Error('String must be at least 1 character long');
+  }
+  if (string.length > 10) {
+    throw new Error('String cannot be longer than 10 characters');
+  }
   let count = 0;
   for (let i = 0; i < string.length; i += 1) {
     count += 1;
-  };
+  }
   return count;
 }
-function stringLengthTest(string) {
-  const characters = string.length;
-  return characters;
-}
-try {
-  const expected = stringLengthTest('password');
-  const result = stringLength('password');
+test('stringLength function should return the correct length of a string', () => {
+  expect(stringLength('password')).toBe(8);
+});
 
-  if (expected !== result) {
-    throw new Error(`${result} is not equal to ${expected}`);
-  } else if(stringLength('') === 0){
-    throw new Error(`no characters detected`);
-  } else {
-    return `${result} is equal to ${expected}`;
+test('stringLength function should throw an error if the string is empty', () => {
+  expect(() => {
+    stringLength('');
+  }).toThrow('String must be at least 1 character long');
+});
+
+test('stringLength function should throw an error if the string is too long', () => {
+  expect(() => {
+    stringLength('thisisaverylongstring');
+  }).toThrow('String cannot be longer than 10 characters');
+});
+
+test('stringLength function should not throw an error if the string is exactly 1 character long', () => {
+  expect(() => {
+    stringLength('a');
+  }).not.toThrow();
+});
+
+test('stringLength function should not throw an error if the string is exactly 10 characters long', () => {
+  expect(() => {
+    stringLength('abcdefghij');
+  }).not.toThrow();
+});
+function reverseString(string) {
+  let reversed = '';
+  for (let i = string.length - 1; i >= 0; i--) {
+    reversed += string[i];
   }
-} catch (error) {
-  return (error.message);
+  return reversed;
 }
+test('reverseString function should throw an error if the string is not reversed', () => {
+  expect(() => {
+    reverseString('boob');
+  }).toThrow('boob');
+});
+test('reverseString function should throw an error if the string is empty', () => {
+  expect(() => {
+    reverseString('');
+  }).toThrow('String must be at least 1 character long');
+});
